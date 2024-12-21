@@ -1,0 +1,88 @@
+
+1. File details with max and min size
+
+#!/bin/bash
+echo "Files in the current directory:"
+ls -l | awk '{print $9, $5}' | tail -n +2 # List file names and sizes
+max=$(ls -lS | awk '{print $9}' | head -2 | tail -1) # Largest file
+min=$(ls -lS | awk '{print $9}' | tail -1)           # Smallest file
+echo "File with maximum size: $max"
+echo "File with minimum size: $min"
+
+
+2. Check Working Day
+
+#!/bin/bash
+day=$(date +%u) # Get the current day of the week (1=Monday, 7=Sunday)
+if [ "$day" -lt 6 ]; then
+  echo "It's a working day."
+else
+  echo "It's not a working day."
+fi
+
+
+3. MBT Health Club Membership
+#!/bin/bash
+read -p "Enter weight: " weight
+if ((weight >= 30 && weight <= 250)); then
+  echo "Welcome to the MBT Health Club!"
+else
+  echo "Weight is not within the required range."
+fi
+
+4.  Greet Based on Time
+
+#!/bin/bash
+hour=$(date +%H) # Get the current hour (24-hour format)
+if ((hour < 12)); then
+  echo "Good Morning!"
+elif ((hour < 18)); then
+  echo "Good Afternoon!"
+else
+  echo "Good Evening!"
+fi
+
+5. Search and Modify Student Record
+
+#!/bin/bash
+read -p "Enter roll number: " rollno
+file="file"
+if grep -q "^$rollno:" "$file"; then
+  read -p "Enter new name: " name
+  read -p "Enter marks (3 subjects, space-separated): " marks
+  sed -i "/^$rollno:/c\\$rollno:$name:$marks" "$file" # Replace line with new record
+  echo "Record updated."
+else
+  echo "Roll No Not Found"
+fi
+ 6. Accept Roll Number via Command Line
+
+#!/bin/bash
+rollno=$1 # Accept roll number as a command-line argument
+file="file"
+if grep -q "^$rollno:" "$file"; then
+  read -p "Enter new name: " name
+  read -p "Enter marks (3 subjects, space-separated): " marks
+  sed -i "/^$rollno:/c\\$rollno:$name:$marks" "$file"
+  echo "Record updated."
+else
+  echo "Roll No Not Found"
+fi
+
+7.  File Type Check
+
+#!/bin/bash
+if [ $# -ne 1 ]; then
+  echo "Error: Only one argument is allowed."
+  exit 1
+fi
+
+if [ -f "$1" ]; then
+  echo "$1 is a regular file."
+elif [ -d "$1" ]; then
+  echo "$1 is a directory."
+else
+  echo "$1 is of another type."
+fi
+
+8.
